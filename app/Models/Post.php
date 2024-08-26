@@ -8,4 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
     use HasFactory;
+
+    protected $casts = [
+        'description'=>'array'
+     ];
+
+
+    protected $fillable = [
+        'title',
+        'description',
+
+    ];
 }
+
