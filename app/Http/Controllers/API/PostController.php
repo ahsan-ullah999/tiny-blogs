@@ -6,10 +6,20 @@ use App\Models\Post;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Http\Controllers\Controller;
-use GuzzleHttp\Psr7\Request;
+// use GuzzleHttp\Psr7\Request;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class PostController extends Controller
+class PostController extends Controller implements HasMiddleware
 {
+
+    public static function middleware()
+    {
+        return[
+            new Middleware('auth:sanctum',except:['index','show'])
+        ];
+    }
     /**
      * Display a listing of the resource.
      */
@@ -26,11 +36,15 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorePostRequest $request)
+    public function store(Request $request)
     {
-        $posts=new Post;
-        $posts->title = $request->title;
-        $posts->description = $request->description;
+        $validation = $request->validate([
+            'title'=>'required|max:255',
+            'description'=>'required'
+        ]);
+        $posts = $request->user()->posts()->create($validation);
+        // $posts->title = $request->title;
+        // $posts->description = $request->description;
         $posts ->save();
         return response()->json([
             'message'=>'create a new post',
