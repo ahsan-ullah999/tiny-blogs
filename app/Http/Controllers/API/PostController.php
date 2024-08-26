@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Facades\Gate;
 
 class PostController extends Controller implements HasMiddleware
 {
@@ -67,9 +68,10 @@ class PostController extends Controller implements HasMiddleware
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatePostRequest $request, $id)
+    public function update(UpdatePostRequest $request, Post $posts)
     {
-        $posts = Post::find($id);
+        Gate::authorize('modify', $posts);
+        $posts = Post::find($posts);
         $posts->update($request->all());
         return response()->json([
             'message'=>'post update successful',
@@ -80,11 +82,12 @@ class PostController extends Controller implements HasMiddleware
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Post $post)
+    public function destroy(Post $posts)
     {
+        Gate::authorize('modify', $posts);
         return response()->json([
             'message'=>'post delete successful',
-             'post'=>$post->delete(),
+             'post'=>$posts->delete(),
         ], 200);
     }
 
