@@ -6,11 +6,10 @@ use App\Models\Post;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Http\Controllers\Controller;
-// use GuzzleHttp\Psr7\Request;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
-use Illuminate\Support\Facades\Gate;
+
 
 class PostController extends Controller implements HasMiddleware
 {
@@ -70,7 +69,7 @@ class PostController extends Controller implements HasMiddleware
      */
     public function update(UpdatePostRequest $request, Post $posts)
     {
-        Gate::authorize('modify', $posts);
+
         $posts = Post::find($posts);
         $posts->update($request->all());
         return response()->json([
@@ -84,7 +83,7 @@ class PostController extends Controller implements HasMiddleware
      */
     public function destroy(Post $posts)
     {
-        Gate::authorize('modify', $posts);
+
         return response()->json([
             'message'=>'post delete successful',
              'post'=>$posts->delete(),
