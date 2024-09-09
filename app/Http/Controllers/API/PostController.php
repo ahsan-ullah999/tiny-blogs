@@ -28,12 +28,7 @@ class PostController extends Controller implements HasMiddleware
     public function index()
     {
         return PostsListResource::collection(Post::all());
-        // $posts = Post::get();
 
-        // return response()->json([
-        //     'message'=>'list of post',
-        //      'post'=>$posts
-        // ], 200);
     }
 
     /**
@@ -46,8 +41,7 @@ class PostController extends Controller implements HasMiddleware
             'description'=>'required'
         ]);
         $posts = $request->user()->posts()->create($validation);
-        // $posts->title = $request->title;
-        // $posts->description = $request->description;
+
         $posts ->save();
         return response()->json([
             'message'=>'create a new post',
@@ -62,10 +56,7 @@ class PostController extends Controller implements HasMiddleware
     {
 
         return PostsShowResource::make($post);
-        //  response()->json([
-        //     'message'=>'single post',
-        //      'post'=>$post
-        // ], 200);
+
     }
 
     /**
