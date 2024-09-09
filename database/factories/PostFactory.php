@@ -19,7 +19,7 @@ class PostFactory extends Factory
     {
         return [
             'title' => fake()->sentence(),
-            'description'=>[],
+            'description'=>fake()->words(50, true),
         ];
     }
 }

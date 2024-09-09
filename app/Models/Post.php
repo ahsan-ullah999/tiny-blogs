@@ -9,9 +9,9 @@ class Post extends Model
 {
     use HasFactory;
 
-    protected $casts = [
-        'description'=>'array'
-     ];
+     protected $casts = [
+         'description'=>'array'
+      ];
 
 
     protected $fillable = [

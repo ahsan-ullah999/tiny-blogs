@@ -6,6 +6,8 @@ use App\Models\Post;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Post\PostsListResource;
+use App\Http\Resources\Post\PostsShowResource;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
@@ -25,12 +27,13 @@ class PostController extends Controller implements HasMiddleware
      */
     public function index()
     {
-        $posts = Post::get();
+        return PostsListResource::collection(Post::all());
+        // $posts = Post::get();
 
-        return response()->json([
-            'message'=>'list of post',
-             'post'=>$posts
-        ], 200);
+        // return response()->json([
+        //     'message'=>'list of post',
+        //      'post'=>$posts
+        // ], 200);
     }
 
     /**
@@ -58,10 +61,11 @@ class PostController extends Controller implements HasMiddleware
     public function show(Post $post)
     {
 
-        return response()->json([
-            'message'=>'single post',
-             'post'=>$post
-        ], 200);
+        return PostsShowResource::make($post);
+        //  response()->json([
+        //     'message'=>'single post',
+        //      'post'=>$post
+        // ], 200);
     }
 
     /**
