@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Resources\Post;
-
+use App\Http\Resources\User\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -19,6 +19,7 @@ class PostsListResource extends JsonResource
             'id'=>$this->id,
             'title'=>$this->title,
             'description'=>substr($this->description, offset:0, length:50),
+            'user'=>new UserResource( $this->user),
 
         ];
 

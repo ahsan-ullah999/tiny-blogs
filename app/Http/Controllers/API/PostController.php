@@ -40,13 +40,12 @@ class PostController extends Controller implements HasMiddleware
             'title'=>'required|max:255',
             'description'=>'required'
         ]);
-        $posts = $request->user()->posts()->create($validation);
+        $posts=$request->user()->post()->create($validation);
 
-        $posts ->save();
-        return response()->json([
-            'message'=>'create a new post',
-             'post'=>$posts
-        ], 200);
+        return $posts;
+
+
+
     }
 
     /**
@@ -56,6 +55,7 @@ class PostController extends Controller implements HasMiddleware
     {
 
         return PostsShowResource::make($post);
+
 
     }
 
