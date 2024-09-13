@@ -20,6 +20,7 @@ class PostFactory extends Factory
         return [
             'title' => fake()->sentence(),
             'description'=>fake()->words(50, true),
+            'user_id'=>1,
         ];
     }
 }
