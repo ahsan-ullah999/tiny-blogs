@@ -17,7 +17,8 @@ class CategorieFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'title' => fake()->sentence(),
+            'slug' => fake()->word(),
         ];
     }
 }
